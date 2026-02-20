@@ -1,0 +1,9 @@
+*.bak
+dist
+output
+package-lock.json
+node_modules/
+
+# IDE
+.idea/
+.vscode/
