@@ -1,0 +1,118 @@
+@font-face {
+    font-family: "jxmx_MainFont";
+    font-display: swap;
+    src: url(../../../font/MainFont.woff2) format("woff2");
+}
+
+.jxmx_container {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    z-index: 999;
+}
+
+.jxmx_background {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    overflow: auto;
+}
+
+.jxmx_background.prohibit {
+    pointer-events: none;
+}
+
+.jxmx_dialog {
+    position: relative;
+    width: 92%;
+    transition: height 0s;
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    background-position: center;
+    font-size: 0;
+}
+
+.jxmx_actual {
+    position: absolute;
+    width: 92%;
+    height: auto;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.jxmx_square {
+    position: relative;
+    aspect-ratio: 1 / 1;
+    left: 0;
+    top: 0;
+    box-sizing: border-box;
+    background-color: rgba(42, 42, 44, 0.35);
+    border: 2px solid #444;
+}
+
+.jxmx_square.disabled {
+    opacity: 0;
+}
+
+.jxmx_square.canMove {
+    border-color: #3cf;
+    box-shadow: 0 0 10px #3cf;
+    animation: jxmx_square-breathe 1s infinite alternate;
+}
+
+.jxmx_square.canMove::before {
+    content: "";
+    position: absolute;
+    inset: 6px;
+    background: rgba(51, 204, 255, 0.15);
+    border: 1px solid rgba(51, 204, 255, 0.5);
+}
+
+@keyframes jxmx_square-breathe {
+    from {
+        opacity: 0.8;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+.jxmx_square.cannotMove {
+    background: #3a2222;
+    border-color: #ff4444;
+    opacity: 0.7;
+    background-image: linear-gradient(45deg, rgba(255, 68, 68, 0.3) 25%, transparent 25%, transparent 50%, rgba(255, 68, 68, 0.3) 50%, rgba(255, 68, 68, 0.3) 75%, transparent 75%, transparent);
+    background-size: 16px 16px;
+    animation: jxmx_square-forbidSlide 2s infinite linear;
+}
+
+@keyframes jxmx_square-forbidSlide {
+    0% {
+        background-position: 0 0;
+    }
+
+    100% {
+        background-position: 0 16px;
+    }
+}
+
+.jxmx_square_icon {
+    position: absolute;
+    width: 84%;
+    height: 86%;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+}

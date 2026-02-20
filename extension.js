@@ -1,0 +1,116 @@
+import {
+    lib,
+    game,
+    ui,
+    get,
+    ai,
+    _status
+} from "noname";
+export const type = "extension";
+import "./mode/index.js";
+import mxhData from './level/mengxianghao.js';
+export default function() {
+    return {
+        name: "吉星大冒险",
+        editable: true,
+        connect: false,
+        arenaReady: function() {
+
+        },
+        content: function(config, pack) {
+
+        },
+        prepare: function() {
+
+        },
+        precontent: function(config) {
+            //导入css文件
+            lib.init.css("extension/吉星大冒险/mode", "index");
+            //转为全局变量
+            game.jxmx_stageData = [];
+            if (mxhData) game.jxmx_stageData.push(mxhData);
+            //【封装函数】数字转换字母
+            game.jxmx_numToLetters = function(num) {
+                let result = '';
+                while (num > 0) {
+                    num--;
+                    result = String.fromCharCode(65 + (num % 26)) + result;
+                    num = Math.floor(num / 26);
+                }
+                return result;
+            };
+            //【封装函数】字母转换数字
+            game.jxmx_lettersToNum = function(str) {
+                let num = 0;
+                for (let i = 0; i < str.length; i++) {
+                    num = num * 26 + (str.charCodeAt(i) - 64);
+                }
+                return num;
+            };
+            //描边文字的SVG滤镜效果
+            let colors = ["#000000"];
+            let svgDefs = '<svg width="0" height="0" xmlns="http://www.w3.org/2000/svg"><defs>';
+            colors.forEach((color, index) => {
+                const radius = 1.5;
+                svgDefs += `
+                <filter id="jxmx_textStroke_${index}">
+                <feMorphology operator="dilate" radius="${radius}" in="SourceAlpha" result="thick" />
+                <feFlood flood-color="${color}" result="fill" />
+                <feComposite in="fill" in2="thick" operator="in" result="stroke" />
+                <feMerge>
+                <feMergeNode in="stroke" />
+                <feMergeNode in="SourceGraphic" />
+                </feMerge>
+                </filter>`;
+            });
+            svgDefs += '</defs></svg>';
+            document.body.insertAdjacentHTML('beforeend', svgDefs);
+            //【封装函数】依据窗口大小变化动态调整样式
+            game.jxmx_testStyleChange = function(div, parentDiv, func, replaceDiv) {
+                //记录parentDiv的宽度
+                var str = parentDiv.offsetWidth;
+                //添加定时器
+                var interval = setInterval(() => {
+                    //若div已不在ui.window页面中，移除定时器
+                    if (!ui.window.contains(div)) {
+                        clearInterval(interval);
+                        return;
+                    }
+                    //若没有变化，取消后续流程
+                    if (str === parentDiv.offsetWidth) return;
+                    str = parentDiv.offsetWidth;
+                    //执行函数效果
+                    if (func && typeof func == "function") func(div, (replaceDiv || parentDiv));
+                }, 100);
+            };
+        },
+        config: {},
+        help: {},
+        package: {
+            character: {
+                character: {},
+                translate: {},
+            },
+            card: {
+                card: {},
+                translate: {},
+                list: [],
+            },
+            skill: {
+                skill: {},
+                translate: {},
+            },
+            intro: "",
+            author: "缘伴随行",
+            diskURL: "",
+            forumURL: "",
+            version: "1.0",
+        },
+        files: {
+            "character": [],
+            "card": [],
+            "skill": [],
+            "audio": []
+        }
+    }
+};
