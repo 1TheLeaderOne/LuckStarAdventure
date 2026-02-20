@@ -5,7 +5,7 @@ import {
     get,
     ai,
     _status
-} from "../../../noname.js";
+} from "noname";
 var main = {
     name: "StarAdventure",
     init: function() {

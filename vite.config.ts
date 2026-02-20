@@ -11,12 +11,13 @@ export default defineConfig(({ mode }) => ({
 		vue() as PluginOption,
 		viteStaticCopy({
 			targets: [
-				{ src: "audio", dest: "" },
+				// { src: "audio", dest: "" },
 				{ src: "image", dest: "" },
 				{ src: "info.json", dest: "" },
 				{ src: "LICENSE", dest: "" },
 				{ src : "font", dest: "" },
 				{ src : "level", dest: "" },
+				{ src : "mode", dest: "" },
 			],
 		}) as PluginOption,
 	],

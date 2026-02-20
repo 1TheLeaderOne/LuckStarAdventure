@@ -23,7 +23,10 @@ export default function() {
         prepare: function() {
 
         },
-        precontent: function(config) {
+        precontent:async function(config) {
+            //导入组件
+            await import("./src/jxmx.js");
+
             //导入css文件
             lib.init.css("extension/吉星大冒险/mode", "index");
             //转为全局变量
